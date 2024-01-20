@@ -1,0 +1,28 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    background-color:#161A30;
+    color: white;
+    font-family: 'Oswald', sans-serif;
+}
+
+h1{
+    color:white;
+    text-align: center;
+    padding: 5%;
+}
+
+.form-todo{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+    font-size: 30px;
+}
+
+.add-task{
+    width: 300px;
+    font-size: 20px;
+    padding: 12px;
+}
+
+
