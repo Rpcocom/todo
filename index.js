@@ -15,12 +15,14 @@ function addTask() {
 
 }
 
+const getParentList = () => document.getElementById('taskList');
+
 function renderTask() {
-    const taskList = document.getElementById('taskList');
+   const taskList = getParentList();
     const newItem = tasks.pop();
     const newTaskToRender = document.createElement('div')
     newTaskToRender.innerHTML = `
-    <div class="task-container">
+    <div class="task-container" id=${newItem}>
         <label for="task${newItem}">
         <input type="checkbox">
         ${newItem}
@@ -32,8 +34,20 @@ function renderTask() {
     taskList.appendChild(newTaskToRender);
 }
 
-function removeTask(index) {
-    tasks.splice(index, 1);
-    renderTask();
+function removeTask(taskToDelete) {
+    const filteredTasks = tasks.filter((task) => task !== taskToDelete );
+    const taskList = getParentList();
+    taskList.innerHTML = ``;
+    filteredTasks.forEach((task) => {
+        taskList.appendChild(`
+        <div class="task-container" id=${newItem}>
+            <label for="task${newItem}">
+            <input type="checkbox">
+            ${newItem}
+            </label>
+            <button class="button-delete" onclick="removeTask(${newItem})" type="submit" >Delete</button>
+        </div>
+        `)
+    });
 }
 
