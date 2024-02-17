@@ -3,7 +3,9 @@ userInput.addEventListener('submit', (event) => {
     addTask();
 });
 
-let tasks = [];
+//@TODO: implement an object with id and value
+
+const tasks = [];
 
 function addTask() {
     const taskInput = document.getElementById('taskInput');
@@ -19,7 +21,7 @@ const getParentList = () => document.getElementById('taskList');
 
 function renderTask() {
    const taskList = getParentList();
-    const newItem = tasks.pop();
+    const newItem = [...tasks].pop();
     const newTaskToRender = document.createElement('div')
     newTaskToRender.innerHTML = `
     <div class="task-container" id=${newItem}>
@@ -27,7 +29,7 @@ function renderTask() {
         <input type="checkbox">
         ${newItem}
         </label>
-        <button class="button-delete" onclick="removeTask(${newItem})" type="submit" >Delete</button>
+        <button class="button-delete" onclick="removeTask(${tasks.length - 1})" type="submit" >Delete</button>
     </div>
     `
 
@@ -35,19 +37,27 @@ function renderTask() {
 }
 
 function removeTask(taskToDelete) {
-    const filteredTasks = tasks.filter((task) => task !== taskToDelete );
+    console.log(taskToDelete)
+    if(tasks.length > 1){
+        tasks.splice(taskToDelete, 1);
+    }else {
+        tasks.pop();
+    }
+    
     const taskList = getParentList();
     taskList.innerHTML = ``;
-    filteredTasks.forEach((task) => {
-        taskList.appendChild(`
-        <div class="task-container" id=${newItem}>
-            <label for="task${newItem}">
+    tasks.forEach((task) => {
+        const newItemTasks = document.createElement('div');
+        newItemTasks.innerHTML = `
+        <div class="task-container" id=${task}>
+            <label for="task${task}">
             <input type="checkbox">
-            ${newItem}
+            ${task}
             </label>
-            <button class="button-delete" onclick="removeTask(${newItem})" type="submit" >Delete</button>
+            <button class="button-delete" onclick="removeTask(${task})" type="submit" >Delete</button>
         </div>
-        `)
+        `
+        taskList.appendChild(newItemTasks)
     });
 }
 
