@@ -8,34 +8,32 @@ let tasks = [];
 function addTask() {
     const taskInput = document.getElementById('taskInput');
     const taskText = taskInput.value.trim();
-    if (taskText !== '') {
-        tasks.push(taskText);
-        displayTasks();
-        taskInput.value = '';
-    }
+    if (!taskText) return;
+    tasks.push(taskText);
+    renderTask();
+    taskInput.value = '';
+
 }
 
-function displayTasks() {
+function renderTask() {
     const taskList = document.getElementById('taskList');
-    taskList.innerHTML = '';
-    tasks.forEach((task, index) => {
-      const taskItem = document.createElement('div');
-      taskItem.innerHTML =  `
-      <div class="task-container">
-          <label for="task${index}">
-          <input type="checkbox">
-          ${task}
-          </label>
-          <button class="button-delete" onclick="removeTask(${index})" type="submit" >Delete</button>
-      </div>
-      `
-      taskList.appendChild(taskItem);
-    });
-  }
+    const newItem = tasks.pop();
+    const newTaskToRender = document.createElement('div')
+    newTaskToRender.innerHTML = `
+    <div class="task-container">
+        <label for="task${newItem}">
+        <input type="checkbox">
+        ${newItem}
+        </label>
+        <button class="button-delete" onclick="removeTask(${newItem})" type="submit" >Delete</button>
+    </div>
+    `
 
-   function removeTask(index) {
+    taskList.appendChild(newTaskToRender);
+}
+
+function removeTask(index) {
     tasks.splice(index, 1);
-    displayTasks();
-  }
+    renderTask();
+}
 
-  
